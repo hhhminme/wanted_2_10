@@ -10,7 +10,6 @@ export const createMatchedData = (
 ): matchedType =>
   cashedWordList
     .filter((cash) => {
-      console.log(cash);
       return cash.name.includes(inputValue);
     })
     .map(({ name, id }) => ({ word: name, isSelected: false }));
@@ -44,7 +43,7 @@ export const findMatchedDataAndDefineModalIsOpenable = (
 ) => {
   const filteredCashes = createMatchedData(cashedWordList, inputValue).slice(
     0,
-    10
+    5
   );
   setDropdownList(filteredCashes);
   filteredCashes.length ? setShowMatched(true) : setShowMatched(false);
@@ -55,7 +54,6 @@ export const defineNextDropdownIdx = (
   curDropdownIdx: number,
   matched: matchedType
 ) => {
-  console.log(keyboardEvent);
   if (keyboardEvent === "ArrowDown") {
     return curDropdownIdx === -1 || curDropdownIdx === matched.length - 1
       ? 0

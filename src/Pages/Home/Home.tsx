@@ -7,6 +7,8 @@ import {
   useCallback,
   useState,
 } from "react";
+import axios from "axios";
+
 import { useClickAway } from "../../Hooks/useClickAway";
 import { Input, Li, Ul, Wrapper } from "./style";
 import {
@@ -107,10 +109,9 @@ const AutoComplete = ({
             ? { ...match, isSelected: true }
             : { ...match, isSelected: false }
         )
-        .slice(0, 10)
+        .slice(0, 5)
     );
   };
-  console.log(dropdownList);
   const handleLiClick = (word: string) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useUpdateInputAndCloseMated(

@@ -19,7 +19,10 @@ import {
 
 interface Props {
   width?: number;
-  cashedWordList: string[];
+  cashedWordList: {
+    name: string;
+    id: number;
+  }[];
   setAutoCompleteInput: Dispatch<SetStateAction<string>>;
   autoCompleteInput: string;
   handleSubmit: () => void;
@@ -107,7 +110,7 @@ const AutoComplete = ({
         .slice(0, 10)
     );
   };
-
+  console.log(dropdownList);
   const handleLiClick = (word: string) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useUpdateInputAndCloseMated(

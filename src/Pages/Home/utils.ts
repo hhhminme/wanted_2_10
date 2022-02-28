@@ -2,16 +2,25 @@ import { Dispatch, KeyboardEvent, SetStateAction } from "react";
 import { matchedType } from "./Home";
 
 export const createMatchedData = (
-  cashedWordList: string[],
+  cashedWordList: {
+    name: string;
+    id: number;
+  }[],
   inputValue: string
 ): matchedType =>
   cashedWordList
-    .filter((cash) => cash.includes(inputValue))
-    .map((word) => ({ word, isSelected: false }));
+    .filter((cash) => {
+      console.log(cash);
+      return cash.name.includes(inputValue);
+    })
+    .map(({ name, id }) => ({ word: name, isSelected: false }));
 
 export const useUpdateInputAndCloseMated = (
   word: string,
-  cashedWordList: string[],
+  cashedWordList: {
+    name: string;
+    id: number;
+  }[],
   setShowMatched: Dispatch<SetStateAction<boolean>>,
   setAutoCompleteInput: Dispatch<SetStateAction<string>>,
   setDropdownList: Dispatch<SetStateAction<matchedType>>,
@@ -25,7 +34,10 @@ export const useUpdateInputAndCloseMated = (
 };
 
 export const findMatchedDataAndDefineModalIsOpenable = (
-  cashedWordList: string[],
+  cashedWordList: {
+    name: string;
+    id: number;
+  }[],
   inputValue: string,
   setDropdownList: Dispatch<SetStateAction<matchedType>>,
   setShowMatched: Dispatch<SetStateAction<boolean>>

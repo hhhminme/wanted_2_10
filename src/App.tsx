@@ -3,6 +3,9 @@ import Global from "./Styles/global";
 import Home from "./Pages/Home";
 import axios from "axios";
 
+import { useSelector, useDispatch } from "react-redux";
+import { fetchData } from "./redux/dataSlice";
+
 function App() {
   const [cashedWordList, setCashedWordList] = useState([
     {
@@ -12,25 +15,19 @@ function App() {
   ]);
   const [autoCompleteInput, setAutoCompleteInput] = useState("");
 
-  const getList = async (autoCompleteInput: any) => {
-    try {
-      const response = await axios.get(
-        "https://api.clinicaltrialskorea.com/api/v1/search-conditions/",
-        {
-          params: {
-            name: autoCompleteInput,
-          },
-        }
-      );
-      setCashedWordList(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const dispatch = useDispatch();
+  // @ts-ignore
+  const { datas, loading, error } = useSelector((state) => state.datas);
+
   useEffect(() => {
-    getList(autoCompleteInput);
-    console.log(cashedWordList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (error) {
+      console.log(error);
+    }
+    if (loading) {
+      console.log("loading");
+    }
+    dispatch(fetchData(autoCompleteInput));
+    setCashedWordList(datas);
   }, [autoCompleteInput]);
 
   return (

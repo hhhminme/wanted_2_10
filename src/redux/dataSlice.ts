@@ -1,16 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchData = createAsyncThunk("datas/fetchData", async () => {
-  return axios
-    .get("https://api.clinicaltrialskorea.com/api/v1/search-conditions/", {
-      params: {
-        name: "방광",
-      },
-    })
-    .then((res) => res.data)
-    .catch((error) => error);
-});
+export const fetchData = createAsyncThunk(
+  "datas/fetchData",
+  async (autoCompleteInput: string) => {
+    try {
+      const response = await axios.get(
+        "https://api.clinicaltrialskorea.com/api/v1/search-conditions/",
+        {
+          params: {
+            name: autoCompleteInput,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      console.log("err", err);
+    }
+  }
+);
 
 const datasSlice = createSlice({
   name: "datas",
@@ -29,14 +38,14 @@ const datasSlice = createSlice({
     },
     //@ts-ignore
     [fetchData.fulfilled]: (state, action) => {
-      state.users = action.payload;
+      state.datas = action.payload;
       state.loading = false;
       state.error = "";
     },
     //@ts-ignore
     [fetchData.rejected]: (state, action) => {
       state.loading = false;
-      state.users = [];
+      state.datas = [];
       state.error = action.payload;
     },
   },

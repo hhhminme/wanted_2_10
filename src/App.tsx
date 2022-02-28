@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Global from "./Styles/global";
+import Home from "./Pages/Home";
+
+import { country } from "./Pages/Home/constant";
 
 function App() {
+  const [cashedWordList, setCashedWordList] = useState(country);
+  const [autoCompleteInput, setAutoCompleteInput] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Global />
+      <Home
+        cashedWordList={cashedWordList}
+        setAutoCompleteInput={setAutoCompleteInput}
+        autoCompleteInput={autoCompleteInput}
+        handleSubmit={() => console.log("AutoComplete Enter pushed!")}
+      />
+    </>
   );
 }
 
